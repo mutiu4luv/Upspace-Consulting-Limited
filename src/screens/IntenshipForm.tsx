@@ -13,8 +13,8 @@ import {
   FormLabel,
   Card,
   CardContent,
+  Select,
 } from "@mui/material";
-import Select from "@mui/material/Select";
 import type { SelectChangeEvent } from "@mui/material/Select";
 
 type FormData = {
@@ -72,23 +72,29 @@ const InternshipForm: React.FC = () => {
     signatureDate: "",
   });
 
-  // Handles both TextField + Select
-  const handleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | SelectChangeEvent<string>
+  // Handle text input changes
+  const handleTextChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle Select input changes
+  const handleSelectChange = (e: SelectChangeEvent<string>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle file uploads
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
-    if (files) {
+    if (files && files.length > 0) {
       setFormData((prev) => ({ ...prev, [name]: files[0] }));
     }
   };
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form Data Submitted: ", formData);
@@ -113,28 +119,6 @@ const InternshipForm: React.FC = () => {
           growth
         </Typography>
 
-        <Card variant="outlined" sx={{ mb: 4 }}>
-          <CardContent>
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              <strong>
-                Application for Internship - Upspace Consulting Limited
-              </strong>
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              As Upspace Consulting Limited enters our foundational year, we are
-              seeking passionate, driven individuals to join our team as interns.
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              This application is designed to help us understand not just your
-              skills, but your potential to contribute to our mission.
-            </Typography>
-            <Typography variant="body2" sx={{ mb: 1 }}>
-              By submitting this application, I certify that the information
-              provided is true and accurate to the best of my knowledge.
-            </Typography>
-          </CardContent>
-        </Card>
-
         <form onSubmit={handleSubmit}>
           <Grid container spacing={4}>
             {/* Personal Information */}
@@ -152,7 +136,7 @@ const InternshipForm: React.FC = () => {
                         label="Full Name"
                         name="fullName"
                         value={formData.fullName}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                         required
                       />
                     </Grid>
@@ -163,7 +147,7 @@ const InternshipForm: React.FC = () => {
                         name="email"
                         type="email"
                         value={formData.email}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                         required
                       />
                     </Grid>
@@ -173,7 +157,7 @@ const InternshipForm: React.FC = () => {
                         label="Phone Number"
                         name="phone"
                         value={formData.phone}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                         required
                       />
                     </Grid>
@@ -183,7 +167,7 @@ const InternshipForm: React.FC = () => {
                         label="LinkedIn Profile URL"
                         name="linkedIn"
                         value={formData.linkedIn}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -195,7 +179,7 @@ const InternshipForm: React.FC = () => {
                           labelId="residency-label"
                           name="residency"
                           value={formData.residency}
-                          onChange={handleChange}
+                          onChange={handleSelectChange}
                         >
                           <MenuItem value="Yes">Yes</MenuItem>
                           <MenuItem value="No">No</MenuItem>
@@ -220,7 +204,7 @@ const InternshipForm: React.FC = () => {
                         label="University/College"
                         name="university"
                         value={formData.university}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -229,7 +213,7 @@ const InternshipForm: React.FC = () => {
                         label="Major(s)"
                         name="major"
                         value={formData.major}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -238,7 +222,7 @@ const InternshipForm: React.FC = () => {
                         label="Minor(s)"
                         name="minor"
                         value={formData.minor}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -247,7 +231,7 @@ const InternshipForm: React.FC = () => {
                         label="Current GPA"
                         name="gpa"
                         value={formData.gpa}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -258,7 +242,7 @@ const InternshipForm: React.FC = () => {
                         type="date"
                         InputLabelProps={{ shrink: true }}
                         value={formData.graduationDate}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                   </Grid>
@@ -325,7 +309,7 @@ const InternshipForm: React.FC = () => {
                         label="How did you hear about this internship?"
                         name="source"
                         value={formData.source}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -336,7 +320,7 @@ const InternshipForm: React.FC = () => {
                         name="startDate"
                         InputLabelProps={{ shrink: true }}
                         value={formData.startDate}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -347,7 +331,7 @@ const InternshipForm: React.FC = () => {
                         name="endDate"
                         InputLabelProps={{ shrink: true }}
                         value={formData.endDate}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                   </Grid>
@@ -374,7 +358,7 @@ const InternshipForm: React.FC = () => {
                         rows={3}
                         name="whyIntern"
                         value={formData.whyIntern}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -387,7 +371,7 @@ const InternshipForm: React.FC = () => {
                         rows={3}
                         name="coreService"
                         value={formData.coreService}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -400,7 +384,7 @@ const InternshipForm: React.FC = () => {
                         rows={3}
                         name="longTermGoal"
                         value={formData.longTermGoal}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -413,7 +397,7 @@ const InternshipForm: React.FC = () => {
                         rows={3}
                         name="values"
                         value={formData.values}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                       />
                     </Grid>
                   </Grid>
@@ -430,7 +414,10 @@ const InternshipForm: React.FC = () => {
                   </Typography>
                   <Divider sx={{ mb: 2 }} />
                   <Typography variant="body2" sx={{ mb: 2 }}>
-                    By submitting this application, I certify that the information provided is true and accurate to the best of my knowledge. I understand that any misrepresentation may lead to the cancellation of my application or internship offer.
+                    By submitting this application, I certify that the information
+                    provided is true and accurate to the best of my knowledge. I
+                    understand that any misrepresentation may lead to the cancellation
+                    of my application or internship offer.
                   </Typography>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -439,7 +426,7 @@ const InternshipForm: React.FC = () => {
                         label="Signature"
                         name="signature"
                         value={formData.signature}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                         required
                       />
                     </Grid>
@@ -451,7 +438,7 @@ const InternshipForm: React.FC = () => {
                         name="signatureDate"
                         InputLabelProps={{ shrink: true }}
                         value={formData.signatureDate}
-                        onChange={handleChange}
+                        onChange={handleTextChange}
                         required
                       />
                     </Grid>
