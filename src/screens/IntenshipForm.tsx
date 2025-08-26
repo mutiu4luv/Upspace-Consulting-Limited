@@ -14,6 +14,7 @@ import {
   FormLabel,
   Card,
   CardContent,
+  SelectChangeEvent,
 } from "@mui/material";
 
 type FormData = {
@@ -71,8 +72,9 @@ const InternshipForm: React.FC = () => {
     signatureDate: "",
   });
 
+  // ✅ updated to handle both TextField + Select
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -134,7 +136,7 @@ const InternshipForm: React.FC = () => {
 
         <form onSubmit={handleSubmit}>
           <Grid container spacing={4}>
-            {/* Information Section */}
+            {/* Personal Information */}
             <Grid item xs={12} md={6}>
               <Card variant="outlined" sx={{ mb: 3 }}>
                 <CardContent>
@@ -151,7 +153,6 @@ const InternshipForm: React.FC = () => {
                         value={formData.fullName}
                         onChange={handleChange}
                         required
-                        variant="outlined"
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -163,7 +164,6 @@ const InternshipForm: React.FC = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        variant="outlined"
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -174,7 +174,6 @@ const InternshipForm: React.FC = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        variant="outlined"
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -184,7 +183,6 @@ const InternshipForm: React.FC = () => {
                         name="linkedIn"
                         value={formData.linkedIn}
                         onChange={handleChange}
-                        variant="outlined"
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -193,9 +191,7 @@ const InternshipForm: React.FC = () => {
                         <Select
                           name="residency"
                           value={formData.residency}
-                          onChange={(e) =>
-                            setFormData({ ...formData, residency: e.target.value })
-                          }
+                          onChange={handleChange}
                         >
                           <MenuItem value="Yes">Yes</MenuItem>
                           <MenuItem value="No">No</MenuItem>
@@ -206,6 +202,7 @@ const InternshipForm: React.FC = () => {
                 </CardContent>
               </Card>
 
+              {/* Educational Background */}
               <Card variant="outlined" sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
@@ -264,6 +261,7 @@ const InternshipForm: React.FC = () => {
                 </CardContent>
               </Card>
 
+              {/* Attachments */}
               <Card variant="outlined" sx={{ mb: 3 }}>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
@@ -309,6 +307,7 @@ const InternshipForm: React.FC = () => {
                 </CardContent>
               </Card>
 
+              {/* Additional Information */}
               <Card variant="outlined">
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 600 }}>
