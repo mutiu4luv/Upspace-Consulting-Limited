@@ -7,15 +7,15 @@ import {
   Grid,
   MenuItem,
   InputLabel,
-  Select,
   FormControl,
   Paper,
   Divider,
   FormLabel,
   Card,
   CardContent,
-  SelectChangeEvent,
 } from "@mui/material";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
 
 type FormData = {
   fullName: string;
@@ -72,9 +72,11 @@ const InternshipForm: React.FC = () => {
     signatureDate: "",
   });
 
-  // ✅ updated to handle both TextField + Select
+  // Handles both TextField + Select
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<string>
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<string>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -95,14 +97,7 @@ const InternshipForm: React.FC = () => {
 
   return (
     <Box sx={{ maxWidth: 900, mx: "auto", py: 5, px: 2 }}>
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          borderRadius: 3,
-          background: "#fafafa",
-        }}
-      >
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3, background: "#fafafa" }}>
         <Typography
           variant="h4"
           gutterBottom
@@ -114,22 +109,28 @@ const InternshipForm: React.FC = () => {
           variant="subtitle1"
           sx={{ textAlign: "center", mb: 4, color: "text.secondary" }}
         >
-          Upspace Consulting Limited – Strategically positioned for long-term growth
+          Upspace Consulting Limited – Strategically positioned for long-term
+          growth
         </Typography>
 
         <Card variant="outlined" sx={{ mb: 4 }}>
           <CardContent>
             <Typography variant="body1" sx={{ mb: 2 }}>
-              <strong>Application for Internship - Upspace Consulting Limited</strong>
+              <strong>
+                Application for Internship - Upspace Consulting Limited
+              </strong>
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              As Upspace Consulting Limited enters our foundational year, we are seeking passionate, driven individuals to join our team as interns. We are your partner for smart growth, credible leadership, and digital future-readiness, and we are looking for candidates who share our commitment to excellence and our core values of Unity, Professionalism, Sustainability, Purpose, Authenticity, Creativity, and Excellence.
+              As Upspace Consulting Limited enters our foundational year, we are
+              seeking passionate, driven individuals to join our team as interns.
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              This application is designed to help us understand not just your skills, but your potential to contribute to our mission of driving sustainable business transformation.
+              This application is designed to help us understand not just your
+              skills, but your potential to contribute to our mission.
             </Typography>
             <Typography variant="body2" sx={{ mb: 1 }}>
-              By submitting this application, I certify that the information provided is true and accurate to the best of my knowledge. I understand that any misrepresentation may lead to the cancellation of my application or internship offer.
+              By submitting this application, I certify that the information
+              provided is true and accurate to the best of my knowledge.
             </Typography>
           </CardContent>
         </Card>
@@ -187,8 +188,11 @@ const InternshipForm: React.FC = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <InputLabel>Are you a Nigerian resident?</InputLabel>
+                        <InputLabel id="residency-label">
+                          Are you a Nigerian resident?
+                        </InputLabel>
                         <Select
+                          labelId="residency-label"
                           name="residency"
                           value={formData.residency}
                           onChange={handleChange}
