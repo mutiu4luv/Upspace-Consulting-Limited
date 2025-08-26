@@ -115,7 +115,7 @@ const InternshipForm: React.FC = () => {
           variant="subtitle1"
           sx={{ textAlign: "center", mb: 4, color: "text.secondary" }}
         >
-          Upspace Consulting Limited – Strategically positioned for long-term
+          Upspace Consulting Limited  Strategically positioned for long-term
           growth
         </Typography>
 
